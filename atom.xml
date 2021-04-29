@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Riser&#39;s blog</title>
+  
+  <subtitle>光而不耀，与光同尘</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://riser6.github.io/"/>
+  <updated>2020-10-18T03:22:35.196Z</updated>
+  <id>http://riser6.github.io/</id>
+  
+  <author>
+    <name>吴栋</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>从FCN到MASK-RCNN到Mutinet</title>
+    <link href="http://riser6.github.io/2020/10/18/cong-fcn-dao-mask-rcnn-dao-mutinet/"/>
+    <id>http://riser6.github.io/2020/10/18/cong-fcn-dao-mask-rcnn-dao-mutinet/</id>
+    <published>2020-10-18T03:21:37.000Z</published>
+    <updated>2020-10-18T03:22:35.196Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;从FCN到Mask-RCNN到Multinet&quot;&gt;&lt;a href=&quot;#从FCN到Mask-RCNN到Multinet&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>PYQT5常用函数</title>
+    <link href="http://riser6.github.io/2020/10/16/pyqt5-chang-yong-han-shu/"/>
+    <id>http://riser6.github.io/2020/10/16/pyqt5-chang-yong-han-shu/</id>
+    <published>2020-10-16T02:53:02.000Z</published>
+    <updated>2020-10-31T02:45:13.012Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h5 id=&quot;ui程序转化为py程序：&quot;&gt;&lt;a href=&quot;#ui程序转化为py程序：&quot; class=&quot;headerlink&quot; title=&quot;ui程序转化为py程序：&quot;&gt;&lt;/a&gt;ui程序转化为py程序：&lt;/h5&gt;&lt;pre&gt;&lt;code&gt;pyuic5 -o xxx.py
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>All You Need Is Boundary</title>
+    <link href="http://riser6.github.io/2020/10/09/all-you-need-is-boundary/"/>
+    <id>http://riser6.github.io/2020/10/09/all-you-need-is-boundary/</id>
+    <published>2020-10-09T06:10:00.000Z</published>
+    <updated>2020-10-10T07:49:48.155Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;All-You-Need-Is-Boundary-Toward-Arbitrary-Shaped-Text-Spotting&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Zero-shot Recognition via Semantic Embeddings and Knowledge Graphs</title>
+    <link href="http://riser6.github.io/2020/09/30/zero-shot-recognition-via-semantic-embeddings-and-knowledge-graphs/"/>
+    <id>http://riser6.github.io/2020/09/30/zero-shot-recognition-via-semantic-embeddings-and-knowledge-graphs/</id>
+    <published>2020-09-30T07:24:37.000Z</published>
+    <updated>2020-10-02T04:35:15.852Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;Zero-shot-Recognition-via-Semantic-Embeddings-and-Knowledge-Graphs&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>多功能数字钟的FPGA实现</title>
+    <link href="http://riser6.github.io/2020/09/20/duo-gong-neng-shu-zi-zhong-de-fpga-shi-xian/"/>
+    <id>http://riser6.github.io/2020/09/20/duo-gong-neng-shu-zi-zhong-de-fpga-shi-xian/</id>
+    <published>2020-09-20T05:38:23.897Z</published>
+    <updated>2021-04-29T01:17:28.030Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;多功能数字钟的FPGA设计与实现&quot;&gt;&lt;a href=&quot;#多功能数字钟的FPGA设计与实现&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>YoloV1~V4系列论文盘点</title>
+    <link href="http://riser6.github.io/2020/06/29/yolov1-v4-xi-lie-lun-wen-pan-dian/"/>
+    <id>http://riser6.github.io/2020/06/29/yolov1-v4-xi-lie-lun-wen-pan-dian/</id>
+    <published>2020-06-29T00:32:59.000Z</published>
+    <updated>2020-07-07T14:30:04.195Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;YoloV1-V4系列论文盘点&quot;&gt;&lt;a href=&quot;#YoloV1-V4系列论文盘点&quot; class=&quot;headerlink&quot; title=&quot;YoloV1~V4系列论文盘点&quot;&gt;&lt;/a&gt;YoloV1~V4系列论文盘点&lt;/h3&gt;&lt;hr&gt;
+&lt;h4
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Deeplearning" scheme="http://Riser6.github.io/categories/Deeplearning/"/>
+    
+    
+      <category term="目标检测" scheme="http://Riser6.github.io/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/"/>
+    
+      <category term="Yolo" scheme="http://Riser6.github.io/tags/Yolo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IO数据传输设计大作业报告</title>
+    <link href="http://riser6.github.io/2020/06/09/io-shu-ju-chuan-shu-she-ji-da-zuo-ye-bao-gao/"/>
+    <id>http://riser6.github.io/2020/06/09/io-shu-ju-chuan-shu-she-ji-da-zuo-ye-bao-gao/</id>
+    <published>2020-06-09T09:34:16.000Z</published>
+    <updated>2020-09-21T03:25:16.871Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;IO接口设计大作业报告&quot;&gt;&lt;a href=&quot;#IO接口设计大作业报告&quot; class=&quot;headerlink&quot; title=&quot;IO接口设计大作业报告&quot;&gt;&lt;/a&gt;IO接口设计大作业报告&lt;/h3&gt;&lt;p&gt;&lt;code&gt;班级:电信1803&lt;/code&gt;   
+        
+      
+    
+    </summary>
+    
+    
+      <category term="实验报告" scheme="http://Riser6.github.io/categories/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    
+    
+      <category term="IO数据传输" scheme="http://Riser6.github.io/tags/IO%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2020-6月工作计划及日志</title>
+    <link href="http://riser6.github.io/2020/06/03/2020-6-yue-gong-zuo-ji-hua-ji-ri-zhi/"/>
+    <id>http://riser6.github.io/2020/06/03/2020-6-yue-gong-zuo-ji-hua-ji-ri-zhi/</id>
+    <published>2020-06-03T11:21:57.000Z</published>
+    <updated>2020-06-30T15:43:14.025Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;2020-6月工作计划及日志&quot;&gt;&lt;a href=&quot;#2020-6月工作计划及日志&quot; class=&quot;headerlink&quot; title=&quot;2020-6月工作计划及日志&quot;&gt;&lt;/a&gt;2020-6月工作计划及日志&lt;/h3&gt;&lt;h4 id=&quot;六月的计划作息和主要事项&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="日志" scheme="http://Riser6.github.io/categories/%E6%97%A5%E5%BF%97/"/>
+    
+    
+      <category term="日志" scheme="http://Riser6.github.io/tags/%E6%97%A5%E5%BF%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>柚子树</title>
+    <link href="http://riser6.github.io/2020/05/27/you-zi-shu/"/>
+    <id>http://riser6.github.io/2020/05/27/you-zi-shu/</id>
+    <published>2020-05-27T13:51:47.000Z</published>
+    <updated>2020-05-29T01:21:05.415Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;strong&gt;柚子树&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;生长在江南旖旎的画卷里，映入眼帘的是终岁繁茂的林海，荣曜秋菊，华茂春松……但倘若关于树的记忆在脑海中渐渐淡去，最后矗立的一定是那棵柚子树。&lt;/p&gt;
+&lt;p&gt;柚子树生长在老家侧坪，不到三米的身高绝对谈不上挺拔，双手一握的树
+        
+      
+    
+    </summary>
+    
+    
+      <category term="随笔" scheme="http://Riser6.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="情感" scheme="http://Riser6.github.io/tags/%E6%83%85%E6%84%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>从ShuffleNet论文入手盘点轻量级网络（原创）</title>
+    <link href="http://riser6.github.io/2020/05/03/cong-shufflenet-lun-wen-ru-shou-pan-dian-qing-liang-ji-wang-luo-yuan-chuang/"/>
+    <id>http://riser6.github.io/2020/05/03/cong-shufflenet-lun-wen-ru-shou-pan-dian-qing-liang-ji-wang-luo-yuan-chuang/</id>
+    <published>2020-05-03T00:55:06.000Z</published>
+    <updated>2020-05-29T01:18:56.372Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;从ShuffleNet论文入手盘点轻量级网络（原创）（未完待续）&quot;&gt;&lt;a href=&quot;#从ShuffleNet论文入手盘点轻量级网络（原创）（未完待续）&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="Deeplearning" scheme="http://Riser6.github.io/categories/Deeplearning/"/>
+    
+    
+      <category term="轻量级网络" scheme="http://Riser6.github.io/tags/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>简单指令集MIPS微处理器设计仿真实验报告</title>
+    <link href="http://riser6.github.io/2020/04/23/jian-dan-zhi-ling-ji-mips-wei-chu-li-qi-she-ji-fang-zhen-shi-yan-bao-gao/"/>
+    <id>http://riser6.github.io/2020/04/23/jian-dan-zhi-ling-ji-mips-wei-chu-li-qi-she-ji-fang-zhen-shi-yan-bao-gao/</id>
+    <published>2020-04-23T00:06:43.000Z</published>
+    <updated>2020-06-09T09:24:39.658Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;简单指令集MIPS微处理器设计仿真实验报告&quot;&gt;&lt;a href=&quot;#简单指令集MIPS微处理器设计仿真实验报告&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+    
+      <category term="实验报告" scheme="http://Riser6.github.io/categories/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"/>
+    
+    
+      <category term="mips微处理器" scheme="http://Riser6.github.io/tags/mips%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8/"/>
+    
+      <category term="Verilog" scheme="http://Riser6.github.io/tags/Verilog/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>千灯齐燃驱晦暗，华夏齐心守星河</title>
+    <link href="http://riser6.github.io/2020/04/19/qian-deng-qi-ran-qu-hui-an-hua-xia-qi-xin-shou-xing-he/"/>
+    <id>http://riser6.github.io/2020/04/19/qian-deng-qi-ran-qu-hui-an-hua-xia-qi-xin-shou-xing-he/</id>
+    <published>2020-04-19T13:01:11.000Z</published>
+    <updated>2020-04-19T13:34:03.843Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;p&gt;&lt;strong&gt;千灯齐燃驱晦暗，华夏齐心守星河&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我的国家依然是五岳向上，一切江河依然是滚滚向东，民族的意志永远向前。&lt;/p&gt;
+&lt;p&gt;——余光中&lt;/p&gt;
+&lt;p&gt;​       
+        
+      
+    
+    </summary>
+    
+    
+      <category term="随笔" scheme="http://Riser6.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="抗疫" scheme="http://Riser6.github.io/tags/%E6%8A%97%E7%96%AB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>理解LSTM</title>
+    <link href="http://riser6.github.io/2020/04/13/li-jie-lstm/"/>
+    <id>http://riser6.github.io/2020/04/13/li-jie-lstm/</id>
+    <published>2020-04-13T04:42:21.000Z</published>
+    <updated>2020-05-29T01:19:51.652Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;理解LSTM&quot;&gt;&lt;a href=&quot;#理解LSTM&quot; class=&quot;headerlink&quot; title=&quot;理解LSTM&quot;&gt;&lt;/a&gt;理解LSTM&lt;/h1&gt;&lt;p&gt;转载翻译自 &lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="deep learning" scheme="http://Riser6.github.io/categories/deep-learning/"/>
+    
+    
+      <category term="LSTM" scheme="http://Riser6.github.io/tags/LSTM/"/>
+    
+      <category term="RNN" scheme="http://Riser6.github.io/tags/RNN/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Learning Lightweight Lane Detection CNNs by Self Attention Distillation</title>
+    <link href="http://riser6.github.io/2020/04/13/learning-lightweight-lane-detection-cnns-by-self-attention-distillation/"/>
+    <id>http://riser6.github.io/2020/04/13/learning-lightweight-lane-detection-cnns-by-self-attention-distillation/</id>
+    <published>2020-04-13T04:14:47.000Z</published>
+    <updated>2020-05-29T01:19:24.236Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;Learning-Lightweight-Lane-Detection-CNNs-by-Self-Attention-Distillation&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+    
+      <category term="CV" scheme="http://Riser6.github.io/categories/CV/"/>
+    
+    
+      <category term="SAD" scheme="http://Riser6.github.io/tags/SAD/"/>
+    
+      <category term="automatic drive" scheme="http://Riser6.github.io/tags/automatic-drive/"/>
+    
+      <category term="Lane Detection" scheme="http://Riser6.github.io/tags/Lane-Detection/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MOTS: Multi-Object Tracking and Segmentation</title>
+    <link href="http://riser6.github.io/2020/04/13/mots-multi-object-tracking-and-segmentation/"/>
+    <id>http://riser6.github.io/2020/04/13/mots-multi-object-tracking-and-segmentation/</id>
+    <published>2020-04-13T02:32:35.000Z</published>
+    <updated>2020-05-29T01:19:11.742Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h3 id=&quot;MOTS-Multi-Object-Tracking-and-Segmentation&quot;&gt;&lt;a href=&quot;#MOTS-Multi-Object-Tracking-and-Segmentation&quot; class=&quot;headerlink&quot; title=&quot;MOTS:
+        
+      
+    
+    </summary>
+    
+    
+      <category term="CV" scheme="http://Riser6.github.io/categories/CV/"/>
+    
+    
+      <category term="MOTS" scheme="http://Riser6.github.io/tags/MOTS/"/>
+    
+      <category term="video segmentation" scheme="http://Riser6.github.io/tags/video-segmentation/"/>
+    
+  </entry>
+  
+</feed>

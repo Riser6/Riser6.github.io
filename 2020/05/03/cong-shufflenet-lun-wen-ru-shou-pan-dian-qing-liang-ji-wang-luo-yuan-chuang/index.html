@@ -1,0 +1,1518 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="从ShuffleNet论文入手盘点轻量级网络（原创）, HUST CV Riser 计算机视觉 吴栋 深度学习">
+    <meta name="description" content="本文从移动端应用广泛地ShuffleNet网络入手，盘点经典轻量级网络。">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>从ShuffleNet论文入手盘点轻量级网络（原创） | Riser&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Riser's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Riser's blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Riser's blog</div>
+        <div class="logo-desc">
+            
+            华中科技大学 | 电子信息与通信 | 计算机视觉
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			Contact
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">从ShuffleNet论文入手盘点轻量级网络（原创）</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+        background-color: rgb(255, 255, 255,0.7);
+        border-radius: 10px;
+        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%BD%91%E7%BB%9C/">
+                                <span class="chip bg-color">轻量级网络</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Deeplearning/" class="post-category">
+                                Deeplearning
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-05-03
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-05-29
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    4.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    15 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="从ShuffleNet论文入手盘点轻量级网络（原创）（未完待续）"><a href="#从ShuffleNet论文入手盘点轻量级网络（原创）（未完待续）" class="headerlink" title="从ShuffleNet论文入手盘点轻量级网络（原创）（未完待续）"></a>从ShuffleNet论文入手盘点轻量级网络（原创）（未完待续）</h2><hr>
+<h3 id="ShuffleNetV1-An-Extremely-Efficient-Convolutional-Neural-Network-for-Mobile"><a href="#ShuffleNetV1-An-Extremely-Efficient-Convolutional-Neural-Network-for-Mobile" class="headerlink" title="ShuffleNetV1: An Extremely Efficient Convolutional Neural Network for Mobile"></a>ShuffleNetV1: An Extremely Efficient Convolutional Neural Network for Mobile</h3><h4 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h4><p>本文提出了一个计算效率高的网络结构——ShuffleNet</p>
+<p>面向对象：计算能力有限（10-150 MFLOPs）的移动端设备</p>
+<p>提出方法：pointwise group convolution 、 channel shuffle</p>
+<p>效果：在维持计算准确度的同时减少了计算花销</p>
+<p>​            ImageNet分类任务（under 40 MFLOPs）,比MobileNet错误率低7.8%</p>
+<p>​            在基于ARM的移动端设备上，同等准确度下，比AlexNet快13倍（理论加速是18倍）</p>
+<hr>
+<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>构造更深和更大的CNN是许多视觉任务的趋势，一般精确的CNN网络含有数百层和数千个通道，需要数十亿量级FLOPs，本文追求的是在有限的计算资源下追求最好的性能。</p>
+<p>现有方法：剪枝、压缩、low-bit表示基础网络。</p>
+<p>本文是探索一个在给定计算资源情况下的高效网络基础架构。</p>
+<p>由于密集1×1卷积代价昂贵，当前的先进的基础架构在小网络的情况下比较低效，我们提出了pointwise group convolution （降低计算复杂度），提出channel shuffle促进信息在特征通道里的流动，以抵消群卷积的副作用，与其他流行网络相比，在给定计算预算下，我们网络允许更多feature map通道，可以编码更多信息，对小网络的性能比较重要。</p>
+<hr>
+<h4 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h4><p>在了解相关工作前，我们先回顾一下标准卷积。</p>
+<p> 标准卷积</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/v2399614b034d4b25382b0f5e4c80107f71440w.jpg" alt="标准卷积计算图"></p>
+<p>HxW表示输入特征图空间尺寸（如上图所示，H和W代表特征图的宽度和高度，输入和输出特征图尺寸不变），N是输入特征通道数，KxK表示卷积核尺寸，M表示输出卷积通道数，则标准卷积计算量是HWNK²M，参数量为K²NM。</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/v24acb7417537e845657901de022a9167a1440w.jpg" alt="标准卷积计算过程"></p>
+<p>如下图所示标准卷积在空间维度和通道维度直观说明（以下示意图省略“spatial“，”channel“，”Input“，”Output“），输入特征图和输出特征图之间连接线表示输入和输出之间的依赖关系。以conv3x3为例子，输入和输出空间“spatial”维度密集连接表示局部连接；而通道维度是全连接，卷积运算都是每个通道卷积操作之后的求和(上图)，和每个通道特征都有关，所以“channel”是互相连接的关系。</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/v22d777b5051846271ffce36228fdcc5751440w.jpg" alt="标准卷积：空间维度和通道维度示意图"></p>
+<h5 id="Efficient-Model-Designs"><a href="#Efficient-Model-Designs" class="headerlink" title="Efficient Model Designs"></a>Efficient Model Designs</h5><h6 id="GoogLeNet-更低的复杂度增加了网络的深度"><a href="#GoogLeNet-更低的复杂度增加了网络的深度" class="headerlink" title="GoogLeNet(更低的复杂度增加了网络的深度)"></a>GoogLeNet(更低的复杂度增加了网络的深度)</h6><p>GoogLeNet是14年ImageNet挑战赛的冠军，当年的亚军是另外一个很有名的网络–vgg，它有着22层的深度，有着更好的性能的同时，确有着更低的参数量（AlexNet的1/3，vgg的1/12）。</p>
+<p>主要亮点是它的inception结构：</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/e54387f99054ef49.png" alt="inception模块"></p>
+<p>GoogLeNet的构建主要是基于inception模块的堆叠，这里我们只关注它轻量高效的特性，主要是通过inception结构中这两个特点来体现的。</p>
+<ul>
+<li><p>多尺寸卷积再聚合</p>
+<p>可以看到前层到后层的计算有四个分支，各分支做不同尺寸的卷积或者池化，再将结果堆叠作为下一层，作者对这种结构的解释（2、3没那么好理解，都比较抽象，有需要推荐阅读论文原文，或者参考我下面给出的博客链接）：</p>
+<ol>
+<li>多个尺度上进行卷积，能提取不同尺度的特征。特征丰富有助于网络推理。</li>
+<li>利用稀疏矩阵分解成密集矩阵计算的原理来加快收敛速度。</li>
+<li>Hebbin赫布原理。</li>
+</ol>
+</li>
+<li><p>1×1卷积（pointwise convolution）</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/v26183445ebd302f4358e3f27333edadec1440w.jpg" alt="1×1卷积示意图"></p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/v246e4dfaf83219c95d0ddec73a18ad38e1440w.jpg" alt="Pointwise卷积：空间维度和通道维度示意图"></p>
+<p>注意3×3和5×5卷积分支都先使用了1×1卷积，对于这一点的解释：</p>
+<ol>
+<li><p>使用1x1卷积进行降维，降低了计算复杂度和参数量</p>
+<p>根据我们之前的推导，容易知道假设上一层的通道数为$n_1$,下一层通道数为$n_2$，不考虑特征图的尺度和卷积核大小，那么计算复杂度是$n_1n_2$,如果先利用1x1卷积将通道数降为m，那么计算复杂度$n_1m+n_2m=(n_1+n_2)m$,那么只要m足够小，就能降低计算复杂度。</p>
+</li>
+<li><p>修正线性激活（ReLU）</p>
+<p>注意上图中省略了ReLU操作，事实上每次卷积之后都会紧跟一个ReLU层，那么显而易见，这里相当于做了两次完整卷积，自然可以组合更多非线性特征。</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>此处讲解比较粗略，有需要推荐阅读论文，或者参考下列链接：</p>
+<p> <a href="https://my.oschina.net/u/876354/blog/1637819" target="_blank" rel="noopener">大话CNN经典模型:GoogLeNet(从Inception v1到v4的演进)</a></p>
+<p><a href="https://www.jianshu.com/p/bfc6da961059" target="_blank" rel="noopener">深入理解GoogLeNet结构（原创）</a></p>
+<p>[][]</p>
+<hr>
+<h6 id="SqueezeNet在保持精度的同时，显著降低了参数和计算量。"><a href="#SqueezeNet在保持精度的同时，显著降低了参数和计算量。" class="headerlink" title="SqueezeNet在保持精度的同时，显著降低了参数和计算量。"></a>SqueezeNet在保持精度的同时，显著降低了参数和计算量。</h6><p>文章标题称同等精度下，参数量仅为AlexNet的1/50，极度下可以压缩到0.5M,AlexNet的1/500（实质被较为广泛地吐槽为标题党，首先所谓参数量为1/50，主要是抛弃了全连接层，所以除却这一部分，参数量其实也大概是原来的1/3，至于压缩到0.5M，是使用了独立于这篇paper外的压缩技术，所以这个网络并不能压缩模型）。</p>
+<p>做法（并没有太多创新点，主要是综合了结构优化和模型压缩）：</p>
+<ul>
+<li><p>大量使用1x1卷积核替换3x3卷积核，因为参数可以降低9倍，这是显而易见的。</p>
+</li>
+<li><p>类似于inception的模块化设计–FireModule</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/1121500.jpg" alt="FireModule结构图"></p>
+<p>本质上和上面的inception差不多</p>
+</li>
+<li><p>网络整体上使用ResNet的跳跃连接，inceptionV4也有对应研究。</p>
+</li>
+<li><p>模型压缩方法：SVD、网络剪枝、量化等(没有仔细了解，后续…)</p>
+</li>
+<li><p>另外文章指出了网络整体的下采样层后置有利于提升网络的性能，也就是说前面层的特征图尺寸较大，这一点其实与降低计算量相悖。</p>
+</li>
+</ul>
+<hr>
+<h6 id="ResNet利用高效的瓶颈结构实现了令人印象深刻的性能"><a href="#ResNet利用高效的瓶颈结构实现了令人印象深刻的性能" class="headerlink" title="ResNet利用高效的瓶颈结构实现了令人印象深刻的性能"></a>ResNet利用高效的瓶颈结构实现了令人印象深刻的性能</h6><p>凯明大神的代表作，以跳跃连接解决深层网络难以训练问题</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/876354.png" alt="残差网络结构"></p>
+<p>其实深层网络难以训练主要是因为梯度消失问题（由于链式法则，梯度从后层向前传递是以0.25衰减的，所以很深的网络到前层几乎梯度为0了，网络几乎得不到训练），这里引入的shortcut connections直接将后层的梯度传递到前层。（和这里提到的无关，但是忍不住想说一下）</p>
+<ul>
+<li><p>bottleneck structure</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20181005185517765.png" alt="ResNet的残差网络结构"></p>
+</li>
+</ul>
+<p>上图两个都是ResNet的残差网络结构，右图就是bottleneck structure结构，与左侧相比，同样是引入了两个1x1卷积层，一个用于压缩通道，一个用于恢复通道，想象一下是不是和瓶颈结构类似，这一结构并未降低计算复杂度，但是参数是之前的1/17。（可以自己推理一下）</p>
+<p>对这一部分有兴趣可以移步阅读原论文，或者参考：</p>
+<p><a href="https://my.oschina.net/u/876354/blog/1622896" target="_blank" rel="noopener">大话深度残差网络（DRN）ResNet网络原理</a></p>
+<hr>
+<h6 id="SENet引入了一种架构单元"><a href="#SENet引入了一种架构单元" class="headerlink" title="SENet引入了一种架构单元"></a>SENet引入了一种架构单元</h6><p>2017ImageNet挑战赛冠军</p>
+<p>ideal：考虑特征通道之间的联系提升网络性能</p>
+<ul>
+<li>核心思想：SE模块（ Squeeze-and-Excitation Module）</li>
+</ul>
+<p>特征重标定:通过学习的方式来自动获取到每个特征通道的重要程度，然后依照这个重要程度去提升有用的特征并抑制对当前任务用处不大的特征。</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/247d198e8ef64a7fa040887b6f0ee0e0th.jpg" alt="SE模块示意图"></p>
+<p>上图是我们提出的 SE 模块的示意图。给定一个输入 x，其特征通道数为 $c_1$，通过一系列卷积等一般变换后得到一个特征通道数为$ c_2$ 的特征。与传统的 CNN 不一样的是，接下来我们通过三个操作来重标定前面得到的特征。</p>
+<p>首先是 Squeeze 操作，我们顺着空间维度来进行特征压缩，将每个二维的特征通道变成一个实数，这个实数某种程度上具有全局的感受野，并且输出的维度和输入的特征通道数相匹配。它表征着在特征通道上响应的全局分布，而且使得靠近输入的层也可以获得全局的感受野，这一点在很多任务中都是非常有用的。</p>
+<p>其次是 Excitation 操作，它是一个类似于循环神经网络中门的机制。通过参数 w 来为每个特征通道生成权重，其中参数 w 被学习用来显式地建模特征通道间的相关性。</p>
+<p>最后是一个 Reweight 的操作，我们将 Excitation 的输出的权重看做是进过特征选择后的每个特征通道的重要性，然后通过乘法逐通道加权到先前的特征上，完成在通道维度上的对原始特征的重标定。</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/915f03dfc77a4f4f98aa3a8b1b6372e3th.jpg" alt="SE模块嵌入实例"></p>
+<p>上左图是将 SE 模块嵌入到 Inception 结构的一个示例。方框旁边的维度信息代表该层的输出。</p>
+<p>这里我们使用 global average pooling 作为 Squeeze 操作。紧接着两个 Fully Connected 层组成一个 Bottleneck 结构去建模通道间的相关性，并输出和输入特征同样数目的权重。我们首先将特征维度降低到输入的 1/16，然后经过 ReLu 激活后再通过一个 Fully Connected 层升回到原来的维度。这样做比直接用一个 Fully Connected 层的好处在于：1）具有更多的非线性，可以更好地拟合通道间复杂的相关性；2）极大地减少了参数量和计算量。然后通过一个 Sigmoid 的门获得 0~1 之间归一化的权重，最后通过一个 Scale 的操作来将归一化后的权重加权到每个通道的特征上。</p>
+<p>除此之外，SE 模块还可以嵌入到含有 skip-connections 的模块中。上右图是将 SE 嵌入到 ResNet 模块中的一个例子，操作过程基本和 SE-Inception 一样，只不过是在 Addition 前对分支上 Residual 的特征进行了特征重标定。如果对 Addition 后主支上的特征进行重标定，由于在主干上存在 0~1 的 scale 操作，在网络较深 BP 优化时就会在靠近输入层容易出现梯度消散的情况，导致模型难以优化。</p>
+<p>SE模块支持嵌入众多的主流网络，在提升性能的同时，几乎不增加计算量和参数量。</p>
+<p>更多细节建议阅读原论文，或者参考原作者的讲解报告：</p>
+<p><a href="https://www.cnblogs.com/bonelee/p/9030092.html" target="_blank" rel="noopener">Momenta详解ImageNet 2017夺冠架构SENet</a></p>
+<hr>
+<h6 id="移动NASNet模型的性能与我们的同类ShuffleNet模型相当"><a href="#移动NASNet模型的性能与我们的同类ShuffleNet模型相当" class="headerlink" title="移动NASNet模型的性能与我们的同类ShuffleNet模型相当"></a>移动NASNet模型的性能与我们的同类ShuffleNet模型相当</h6><p>首先要搞懂NAS，NASNet是将其推广到imageNet数据集。还没来得及仔细看，对于具体方法的介绍暂且放置。</p>
+<hr>
+<h5 id="Group-Convolution"><a href="#Group-Convolution" class="headerlink" title="Group Convolution"></a>Group Convolution</h5><p>分组卷积最早出现在AlexNet中，即将模型分布在两个GPU上。如下图：</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/v25c41e6327eeb662dc1c6f8c20c8badcbr.jpg" alt="AlexNet网络架构"></p>
+<p>分组卷积是标准卷积的变体，其中输入特征通道被为G组(下图)，并且对于每个分组的信道独立地执行卷积，则分组卷积计算量是HWNK²M/G，为标准卷积计算量的1/G。</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/v2-baf2aeff4dc500d4a6d257513c0b2b95_r.jpg" alt="空间维度和通道维度示意图"></p>
+<h6 id="Depthwise-convolution"><a href="#Depthwise-convolution" class="headerlink" title="Depthwise convolution"></a>Depthwise convolution</h6><p>当G=C，（即将每一个通道分为一组），这时就称作Depthwise convolution，此时为Group Convolution的最简化形式，相当于单独收集每个通道的信息，此时计算量也是最低的，为HWNK²M/C。</p>
+<p>但是Group Convolution应该是不改变参数量的。因为卷积核的厚度变为1/G，个数也变为原来的G倍。</p>
+<p>MobileNet采用了深度可分离卷积，并在轻量级模型中获得了最先进的结果。</p>
+<p>本文以我们的工作以一种新的形式推广了分组卷积和深度可分离卷积。</p>
+<hr>
+<h5 id="Channel-Shuffle-Operation"><a href="#Channel-Shuffle-Operation" class="headerlink" title="Channel Shuffle Operation"></a>Channel Shuffle Operation</h5><p>之前很少有工作研究这一方面或者他的有效性。所以这个方法可以算作是这篇论文提出的。</p>
+<p>Grouped Convlution导致模型的信息流限制在各个group内，组与组之间没有信息交换，这会影响模型的表示能力。因此，需要引入group之间信息交换的机制，即Channel Shuffle操作（通过张量的reshape 和transpose，实现改变通道之间顺序）。</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/v23868e1964596de344311df55965067261440w.jpg" alt="Channel shuffle：空间维度和通道维度示意图"></p>
+<hr>
+<h5 id="Model-Acceleration（尚未仔细研究）"><a href="#Model-Acceleration（尚未仔细研究）" class="headerlink" title="Model Acceleration（尚未仔细研究）"></a>Model Acceleration（尚未仔细研究）</h5><h6 id="目的："><a href="#目的：" class="headerlink" title="目的："></a>目的：</h6><p>保持预训练模型精度的同时，加速推理。</p>
+<h6 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h6><ul>
+<li><p>修剪网络连接或通道。</p>
+</li>
+<li><p>减少预训练模型中的冗余连接。</p>
+</li>
+<li><p>提出量化和因式分解来减少计算中的冗余，加快推理速度。</p>
+</li>
+<li><p>在不修改参数的情况下，由FFT等方法实现的优化卷积算法在实际应用中降低了时间消耗。</p>
+</li>
+<li><p>蒸馏将知识从大型模型转移到小型模型，这使得训练小型模型更加容易。</p>
+</li>
+</ul>
+<hr>
+<h5 id="MobileNet-V1"><a href="#MobileNet-V1" class="headerlink" title="MobileNet V1"></a>MobileNet V1</h5><p>思想：深度可分离卷积（Depthwise separable convolution）代替标准的卷积，并使用宽度因子(width multiply)减少参数量。</p>
+<p>深度可分离卷积把标准的卷积因式分解成一个深度卷积(depthwise convolution)和一个逐点卷积(pointwise convolution)。</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/v23450e77fa31b290006e0ea4b77a16d081440w.jpg" alt="深度可分离卷积示意图"></p>
+<p>计算量的减少：</p>
+<p>给定输入大小$c×h×w$，输出为$c×h×m$，卷积核大小为$k×k$</p>
+<p>标准卷积：$chwmk^2$</p>
+<p>深度可分离卷积：$chwk^2+chwm$</p>
+<p>压缩率：$(chwk^2+chwm)/chwmk^2=1/m+1/k^2$</p>
+<hr>
+<h4 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h4><h5 id="Channel-Shuffle-for-Group-Convolutions"><a href="#Channel-Shuffle-for-Group-Convolutions" class="headerlink" title="Channel Shuffle for Group Convolutions"></a>Channel Shuffle for Group Convolutions</h5><p>现代卷积神经网络通常由相同结构的重复构建块组成。构建块时引入了高效的深度可分卷积或组卷积，但是没有对1×1卷积使用这些高效卷积方式，但其实由于1×1卷积的大量使用，它的计算量在整个网络中的占比是相当大的，所以本文考虑对1×1卷积也使用类似分组卷积这种高效形式。</p>
+<p>计算成本确实减少了，但是也会出现我们上面所说的各组之间阻碍信息流，削弱了表征能力。</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/sjjuyu78885.png" alt="对传统分组卷积的通道重排修正"></p>
+<p>图a是传统的分组卷积，通过像图c那样加入一个通道重排模块（reshape），就可以解决这个问题。并且通道重排也是可微的，那么不影响网络的端对端训练。</p>
+<h5 id="ShuffleNet-Unit"><a href="#ShuffleNet-Unit" class="headerlink" title="ShuffleNet Unit"></a>ShuffleNet Unit</h5><p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/52426.png" alt="ShuffleNet单元的形成"></p>
+<p>它的设计原理是基于residual block的，当然这里的残差块和我们在上面讲到的原始残差块略有区别，加入了BN（批量标准化）以及对3×3卷积块使用了Depthwise convolution，这些都是后续研究做出的改进。然后我们将第一个1×1层替换为分组逐点卷积，然后进行通道重排操作，并将3×3卷积块后面的Relu操作去掉（操作很工程，并没有做过多的解释。。），形成一个ShuffleNet单元，如(b)所示。当然文章最终给出的ShuffleNet单元如(c)所示，注意stride=2,那么之前的shortcut conection恒等连接替换成平均池化，求和替换成连接。</p>
+<p>计算量的减少：</p>
+<p>给定输入大小$c×h×w$，瓶颈通道数是m</p>
+<p>ResNet:$hw(2cm+9m^2)$FLOPs</p>
+<p>ResNext:$hw(2cm+9m^2/g)$</p>
+<p>ShuffleNet单元（b）:$hw(2cm/g+9m)$</p>
+<p>给定计算预算，ShuffleNet可以使用更广的特征图。我们发现这对于小型网络非常重要，因为小型网络通常没有足够的通道来处理信息。</p>
+<p>故意只在瓶颈上使用深度卷积，以尽可能地避免开销。</p>
+<h5 id="Network-Architecture"><a href="#Network-Architecture" class="headerlink" title="Network Architecture"></a>Network Architecture</h5><h6 id="参数g的选取"><a href="#参数g的选取" class="headerlink" title="参数g的选取"></a>参数g的选取</h6><p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/7878163421.png" alt="ShuffleNet架构计算复杂度与g与输出通道数的关系"></p>
+<p>上面是ShuffleNet的架构，我们知道在我们上面的设计中g是可调节的超参数，当然g的增大意味着整体计算复杂度的下降，那么这里相应增加输出的通道数，使得网络整体计算成本大概保持在（140MFLOPs），这一架构我们称之为ShuffleNet 1×。</p>
+<h6 id="复杂度的定制"><a href="#复杂度的定制" class="headerlink" title="复杂度的定制"></a>复杂度的定制</h6><p>通过对输出通道调控可以使这个网络满足其他所需要的复杂度，简单地将通道的数量乘以一个比例因子s，将这一网络称为ShuffleNet s×，复杂度是ShuffleNet 1×的<em>s</em>2倍。</p>
+<hr>
+<h4 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h4><p>首先进行消融实验分别对分组逐点卷积和通道重排操作进行评估。</p>
+<h5 id="分组逐点卷积评估"><a href="#分组逐点卷积评估" class="headerlink" title="分组逐点卷积评估"></a>分组逐点卷积评估</h5><h5 id><a href="#" class="headerlink" title></a><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20190823134456547.png" alt="分类误差VS组数g"></h5><p>g=1代表不做分组逐点卷积。</p>
+<h5 id="通道重排-vs-不重排"><a href="#通道重排-vs-不重排" class="headerlink" title="通道重排 vs 不重排"></a>通道重排 vs 不重排</h5><h5 id="-1"><a href="#-1" class="headerlink" title></a><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20190823134517316.png" alt="通道重排 vs 不重排"></h5><h5 id="与其他结构单元比较"><a href="#与其他结构单元比较" class="headerlink" title="与其他结构单元比较"></a>与其他结构单元比较</h5><p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/2019082313454348.png" alt="同一复杂度性能比较"></p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20190823134605985.png" alt="同一性能复杂度比较"></p>
+<h5 id="MobileNets和其他框架进行比较"><a href="#MobileNets和其他框架进行比较" class="headerlink" title="MobileNets和其他框架进行比较"></a>MobileNets和其他框架进行比较</h5><h5 id="-2"><a href="#-2" class="headerlink" title></a><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20190823134627490.png" alt="ShuffleNet vs. MobileNet （在ImageNet分类任务上）"></h5><h5 id="泛化能力"><a href="#泛化能力" class="headerlink" title="泛化能力"></a>泛化能力</h5><p>coco目标检测任务，以采用Faster-RCNN作为检测框架，测试ShuffleNet（以MobileNets进行对比）。</p>
+<h5 id="-3"><a href="#-3" class="headerlink" title></a><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20190823134647752.png" alt="coco探测数据集结果"></h5><h5 id="实际加速评估"><a href="#实际加速评估" class="headerlink" title="实际加速评估"></a>实际加速评估</h5><p>评估了基于ARM平台的移动设备上的ShuffleNet模型的实际推理速度。</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20190823134717385.png" alt="移动设备上的实际推理时间"></p>
+<p>后续：补上MobileNets V2和ShuffleNet V2的改进方法</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Riser6.github.io" rel="external nofollow noreferrer">Riser</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Riser6.github.io/2020/05/03/cong-shufflenet-lun-wen-ru-shou-pan-dian-qing-liang-ji-wang-luo-yuan-chuang/">http://Riser6.github.io/2020/05/03/cong-shufflenet-lun-wen-ru-shou-pan-dian-qing-liang-ji-wang-luo-yuan-chuang/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://Riser6.github.io" target="_blank">Riser</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%BD%91%E7%BB%9C/">
+                                    <span class="chip bg-color">轻量级网络</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'TbkIgxj7apkJ4AWFpvgQIpO4-gzGzoHsz',
+        appKey: 'hW82qJK0380DkiSYGCHBhkQI',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/05/27/you-zi-shu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="柚子树">
+                        
+                        <span class="card-title">柚子树</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            哈哈，翻到手机里面仅存的一篇高中时写的作文了，“车马邮件都很慢，一生只够爱一人”的爱情还值得起推敲吗？
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9A%8F%E7%AC%94/" class="post-category">
+                                    随笔
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%83%85%E6%84%9F/">
+                        <span class="chip bg-color">情感</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/04/23/jian-dan-zhi-ling-ji-mips-wei-chu-li-qi-she-ji-fang-zhen-shi-yan-bao-gao/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="简单指令集MIPS微处理器设计仿真实验报告">
+                        
+                        <span class="card-title">简单指令集MIPS微处理器设计仿真实验报告</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            简单指令集mips微处理器基于硬件描述语言Verilog的设计与仿真实验
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-23
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" class="post-category">
+                                    实验报告
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/mips%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8/">
+                        <span class="chip bg-color">mips微处理器</span>
+                    </a>
+                    
+                    <a href="/tags/Verilog/">
+                        <span class="chip bg-color">Verilog</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="http://Riser6.github.io" target="_blank">吴栋</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">34.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "4";
+                    var startDate = "08";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Riser6" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1528152501@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1528152501" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1528152501" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

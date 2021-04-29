@@ -1,0 +1,1658 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="简单指令集MIPS微处理器设计仿真实验报告, HUST CV Riser 计算机视觉 吴栋 深度学习">
+    <meta name="description" content="简单指令集mips微处理器基于硬件描述语言Verilog的设计与仿真实验">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>简单指令集MIPS微处理器设计仿真实验报告 | Riser&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Riser's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Riser's blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Riser's blog</div>
+        <div class="logo-desc">
+            
+            华中科技大学 | 电子信息与通信 | 计算机视觉
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			Contact
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">简单指令集MIPS微处理器设计仿真实验报告</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+        background-color: rgb(255, 255, 255,0.7);
+        border-radius: 10px;
+        box-shadow: 0 10px 35px 2px rgba(0, 0, 0, .15), 0 5px 15px rgba(0, 0, 0, .07), 0 2px 5px -5px rgba(0, 0, 0, .1) !important;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/mips%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8/">
+                                <span class="chip bg-color">mips微处理器</span>
+                            </a>
+                        
+                            <a href="/tags/Verilog/">
+                                <span class="chip bg-color">Verilog</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" class="post-category">
+                                实验报告
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-04-23
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-06-09
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    3.5k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    14 分
+                </div>
+                
+				
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+            
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h3 id="简单指令集MIPS微处理器设计仿真实验报告"><a href="#简单指令集MIPS微处理器设计仿真实验报告" class="headerlink" title="简单指令集MIPS微处理器设计仿真实验报告"></a>简单指令集MIPS微处理器设计仿真实验报告</h3><hr>
+<h4 id="实验任务"><a href="#实验任务" class="headerlink" title="实验任务"></a>实验任务</h4><p>​        全部采用Verilog 硬件描述语言设计实现简单指令集MIPS 微处理器，并且要求微处理器支持：</p>
+<ul>
+<li>算术、逻辑运算指令：add、sub、and、or、slt</li>
+<li>数据传送指令：lw、sw</li>
+<li>程序控制指令:beq、j</li>
+</ul>
+<p>​        要求指令存储器在时钟上升沿读出指令，指令指针的修改、寄存器文件写入、数据存储器数据写入都在时钟下降沿完成。完成完整设计代码输入、各模块完整功能仿真，整体仿真，验证所有指令执行情况。</p>
+<p>​        且假定所有通用寄存器复位时取值都为各自寄存器编号乘以4；PC寄存器初始值为0；数据存储器和指令存储器容量大小为32*32，且地址都从0开始，指令存储器初始化时装载测试MIPS汇编程序的机器指令，数据存储器所有存储单元的初始值为其对应地址的取值。需要注意的是数据存储器的地址呈现以下规则：都是4的整数倍。</p>
+<p>​        仿真以下MIPS汇编语言程序段的执行流程：</p>
+<pre class=" language-verilog"><code class="language-verilog">main<span class="token punctuation">:</span>    add <span class="token property">$4</span><span class="token punctuation">,</span><span class="token property">$2</span><span class="token punctuation">,</span><span class="token property">$3</span>
+        lw <span class="token property">$4</span><span class="token punctuation">,</span><span class="token function">4</span><span class="token punctuation">(</span><span class="token property">$2</span><span class="token punctuation">)</span>
+        sw <span class="token property">$5</span><span class="token punctuation">,</span><span class="token function">8</span><span class="token punctuation">(</span><span class="token property">$2</span><span class="token punctuation">)</span>
+        sub <span class="token property">$2</span><span class="token punctuation">,</span><span class="token property">$4</span><span class="token punctuation">,</span><span class="token property">$3</span>
+        <span class="token keyword">or</span> <span class="token property">$2</span><span class="token punctuation">,</span><span class="token property">$4</span><span class="token punctuation">,</span><span class="token property">$3</span>
+        <span class="token keyword">and</span> <span class="token property">$2</span><span class="token punctuation">,</span><span class="token property">$4</span><span class="token punctuation">,</span><span class="token property">$3</span>
+        slt <span class="token property">$2</span><span class="token punctuation">,</span><span class="token property">$4</span><span class="token punctuation">,</span><span class="token property">$3</span>
+        beq <span class="token property">$3</span><span class="token punctuation">,</span><span class="token property">$3</span><span class="token punctuation">,</span>equ
+        w <span class="token property">$2</span><span class="token punctuation">,</span><span class="token function">0</span><span class="token punctuation">(</span><span class="token property">$3</span><span class="token punctuation">)</span>
+equ<span class="token punctuation">:</span>    beq <span class="token property">$3</span><span class="token punctuation">,</span><span class="token property">$4</span><span class="token punctuation">,</span>exit
+        sw <span class="token property">$2</span><span class="token punctuation">,</span><span class="token function">0</span><span class="token punctuation">(</span><span class="token property">$3</span><span class="token punctuation">)</span>
+exit<span class="token punctuation">:</span>   j main</code></pre>
+<hr>
+<h4 id="实验目的"><a href="#实验目的" class="headerlink" title="实验目的"></a>实验目的</h4><ul>
+<li>熟悉微处理器的基本构成</li>
+<li>掌握哈佛结构的计算机工作原理</li>
+<li>学会设计简单指令集的mips微处理器</li>
+<li>了解软件控制硬件工作的基本原理</li>
+</ul>
+<hr>
+<h4 id="实验环境"><a href="#实验环境" class="headerlink" title="实验环境"></a>实验环境</h4><ul>
+<li>Windows10操作系统</li>
+<li>编辑工具：Notepad++,ModelSim编辑器</li>
+<li>Verilog仿真平台:ModelSim</li>
+</ul>
+<hr>
+<h4 id="基本原理"><a href="#基本原理" class="headerlink" title="基本原理"></a>基本原理</h4><p>​        本实验设计的简单指令集的MIPS微处理器完整框图如下所示。由图可知，该微处理器由寄存器文件模块、ALU模块、指令存储器模块、数据存储器模块、主控制器译码模块、ALU控制模块，并将各模块按照下图级联方式进行连接，再加上时钟信号CLK和复位信号Reset，就能模拟MIPS微处理器在上电情况在时钟节拍的调剂下执行指令。</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20200420155555.png" alt="图1 加上控制器的简单指令集MIPS微处理器完整框图"></p>
+<hr>
+<h4 id="实验模块设计"><a href="#实验模块设计" class="headerlink" title="实验模块设计"></a>实验模块设计</h4><h5 id="寄存器文件模块的设计"><a href="#寄存器文件模块的设计" class="headerlink" title="寄存器文件模块的设计"></a>寄存器文件模块的设计</h5><p>寄存器文件模块保存寄存器操作数数据，这里使用32个32位宽的寄存器存储数据（1个寄存器存储1个寄存器操作数），指令执行过程中需要区分指令Rs,Rt,Rd域（提供寄存器地址）对应的寄存器，该模块支持读出Rs,Rt域对应的寄存器的值，在时钟信号clk的上升沿，并且能够在写信号regwr有效、复位信号reset无效情况下，将数据写入Rd域对应的寄存器，并且在复位信号reset有效时，将所有寄存器置0。</p>
+<p>模块verilog代码设计如下：</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token keyword">module</span> <span class="token function">regFile</span><span class="token punctuation">(</span>
+    <span class="token keyword">input</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> RsAddr<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> RtAddr<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> WriteAddr<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> WriteData<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> regwr<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> clk<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> reset<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> RsData<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> RtData
+<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">reg</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> regs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">31</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> RsData<span class="token operator">=</span><span class="token punctuation">(</span>RsAddr<span class="token operator">==</span><span class="token number">5'b0</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token number">32'b0</span><span class="token punctuation">:</span>regs<span class="token punctuation">[</span>RsAddr<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> RtData<span class="token operator">=</span><span class="token punctuation">(</span>RtAddr<span class="token operator">==</span><span class="token number">5'b0</span><span class="token punctuation">)</span><span class="token operator">?</span><span class="token number">32'b0</span><span class="token punctuation">:</span>regs<span class="token punctuation">[</span>RtAddr<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">integer</span> i<span class="token punctuation">;</span>
+    <span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword">negedge</span> clk<span class="token punctuation">)</span>
+        <span class="token function">if</span><span class="token punctuation">(</span><span class="token operator">!</span>reset <span class="token operator">&amp;</span> regwr<span class="token punctuation">)</span>
+</code></pre>
+<h5 id="ALU模块的设计"><a href="#ALU模块的设计" class="headerlink" title="ALU模块的设计"></a>ALU模块的设计</h5><p>在mips简单指令集下，ALU单元需支持对输入的两个有符号操作数in1、in2做加、减、与、或、小于设置5种运算，输出运算结果ALURes，并且有输入的ALU控制信号ALUCtr决定执行何种操作，其对应关系如下图所示：</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20200420172425.png" alt="图2 对应加、减、与、或、小于设置5种运算的ALU 控制信号编码"></p>
+<p>输出ALU运算结果ALURes以及判断两操作数是否相等的标志Zero（若两操作数相等）用于程序跳转指令通路的控制。</p>
+<p>模块verilog代码设计如下：</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token keyword">module</span> <span class="token function">ALU</span><span class="token punctuation">(</span>
+    <span class="token keyword">input</span> <span class="token keyword">signed</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> in1<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> <span class="token keyword">signed</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> in2<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> ALUCtr<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> <span class="token keyword">reg</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> ALURes<span class="token punctuation">,</span>
+    <span class="token keyword">output</span>  <span class="token keyword">reg</span> Zero
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token important">always @</span><span class="token punctuation">(</span>in1 <span class="token keyword">or</span> in2 <span class="token keyword">or</span> ALUCtr<span class="token punctuation">)</span>
+    <span class="token keyword">begin</span>
+        <span class="token function">case</span><span class="token punctuation">(</span>ALUCtr<span class="token punctuation">)</span>
+            <span class="token number">4'b0000</span><span class="token punctuation">:</span> <span class="token keyword">begin</span>
+                ALURes<span class="token operator">=</span>in1 <span class="token operator">&amp;</span> in2<span class="token punctuation">;</span>
+                Zero<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">end</span>
+            <span class="token number">4'b0001</span><span class="token punctuation">:</span> <span class="token keyword">begin</span>
+                ALURes<span class="token operator">=</span>in1 <span class="token operator">|</span> in2<span class="token punctuation">;</span>
+                Zero<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">end</span>
+            <span class="token number">4'b0010</span><span class="token punctuation">:</span> <span class="token keyword">begin</span>
+                ALURes<span class="token operator">=</span>in1 <span class="token operator">+</span> in2<span class="token punctuation">;</span>
+                Zero<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">end</span>
+            <span class="token number">4'b0110</span><span class="token punctuation">:</span> <span class="token keyword">begin</span>
+                ALURes<span class="token operator">=</span>in1 <span class="token operator">-</span> in2<span class="token punctuation">;</span>
+                Zero<span class="token operator">=</span><span class="token punctuation">(</span>ALURes <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">?</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">end</span>
+            <span class="token number">4'b0111</span><span class="token punctuation">:</span> <span class="token keyword">begin</span>
+                ALURes<span class="token operator">=</span><span class="token punctuation">(</span>in1 <span class="token operator">&lt;</span> in2<span class="token punctuation">)</span> <span class="token operator">?</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">;</span>
+                Zero<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">end</span>
+            <span class="token keyword">default</span><span class="token punctuation">:</span> <span class="token keyword">begin</span>
+                ALURes<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+                Zero<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+            <span class="token keyword">end</span>
+        <span class="token keyword">endcase</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">endmodule</span></code></pre>
+<h5 id="指令存储器模块的设计"><a href="#指令存储器模块的设计" class="headerlink" title="指令存储器模块的设计"></a>指令存储器模块的设计</h5><p>指令存储器存储待执行的指令，这里用32个32位宽的寄存器保存指令（1个寄存器存储1条指令），通过传入指令的序号地址addr（顶层模块中PC寄存器右移两位的结果得到的序号地址），得到待执行指令的机器码instr。这里提前使用MARS得到测试汇编代码的机器码，使用readmemh函数将机器码从文件中读取到寄存器内。</p>
+<p>模块verilog代码设计如下：</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token keyword">module</span> <span class="token function">instruct_rom</span><span class="token punctuation">(</span>
+    <span class="token keyword">input</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> addr<span class="token punctuation">,</span>
+<span class="token keyword">output</span> <span class="token keyword">reg</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> instr<span class="token punctuation">,</span>
+<span class="token keyword">input</span> clk
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">reg</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span>  regs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">31</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword">posedge</span> clk<span class="token punctuation">)</span>
+        <span class="token keyword">assign</span> instr <span class="token operator">=</span> regs <span class="token punctuation">[</span>addr<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">initial</span>
+    <span class="token property">$readmemh</span><span class="token punctuation">(</span><span class="token string">"D:/inter/mips_cpu/test.txt"</span><span class="token punctuation">,</span>regs<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">endmodule</span></code></pre>
+<h5 id="数据存储器模块的设计"><a href="#数据存储器模块的设计" class="headerlink" title="数据存储器模块的设计"></a>数据存储器模块的设计</h5><p>数据存储器存储存储器操作数，这里用32个32位宽的寄存器保存数据（1个寄存器存储1个存储器操作数），通过输入地址addr，输出对应存储单元的数据readdata，并且在clk时钟上升沿，并且在写控制信号MemWR有效地情况下，可以将数据writedata写入地址addr对应存储单元。初始时，按照测试要求，数据存储器存储初始值对应的地址。</p>
+<p>模块verilog代码设计如下：</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token keyword">module</span> <span class="token function">data_rom</span><span class="token punctuation">(</span>
+    <span class="token keyword">input</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> addr<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> readdata<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> writedata<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> MemWR<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> clk
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">reg</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span>  regs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">31</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> readdata<span class="token operator">=</span>regs<span class="token punctuation">[</span>addr<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token important">always @</span><span class="token punctuation">(</span><span class="token keyword">negedge</span> clk<span class="token punctuation">)</span>
+    <span class="token function">if</span><span class="token punctuation">(</span>MemWR<span class="token punctuation">)</span>
+    regs<span class="token punctuation">[</span>addr<span class="token punctuation">]</span><span class="token operator">=</span>writedata<span class="token punctuation">;</span>
+    <span class="token keyword">integer</span> i<span class="token punctuation">;</span>
+    <span class="token keyword">initial</span>
+    <span class="token function">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">32</span><span class="token punctuation">;</span>i<span class="token operator">=</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+        regs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>i<span class="token punctuation">;</span>
+<span class="token keyword">endmodule</span></code></pre>
+<h5 id="主控制器译码模块的设计"><a href="#主控制器译码模块的设计" class="headerlink" title="主控制器译码模块的设计"></a>主控制器译码模块的设计</h5><p>主控制模块输入指令操作码opCode，产生ALU控制信号ALUop，电路中5个复用器的通道选择信号RtDst、Imm、M2R 、B、J，以及寄存器文件、数据存储器写控制信号regwr、memwr。具体译码规则如下图：</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20211939.png" alt="图3 主控制器译码规则"></p>
+<p>模块verilog代码设计如下：</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token keyword">module</span> <span class="token function">master_Ctr</span><span class="token punctuation">(</span>
+    <span class="token keyword">input</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> opCode<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span>ALUop<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> RtDst<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> regwr<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> Imm<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> memwr<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> B<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> J<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> M2R
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">reg</span><span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> temp_output<span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> <span class="token operator">{</span>RtDst<span class="token punctuation">,</span>Imm<span class="token punctuation">,</span>M2R<span class="token punctuation">,</span>regwr<span class="token punctuation">,</span>memwr<span class="token punctuation">,</span>B<span class="token punctuation">,</span>J<span class="token punctuation">,</span>ALUop<span class="token operator">}=</span>temp_output<span class="token punctuation">;</span>
+    <span class="token important">always @</span> <span class="token punctuation">(</span>opCode<span class="token punctuation">)</span>
+        <span class="token keyword">case</span> <span class="token punctuation">(</span>opCode<span class="token punctuation">)</span>
+            <span class="token number">6'b000010</span><span class="token punctuation">:</span>temp_output<span class="token operator">=</span><span class="token number">9'bxxx0001xx</span><span class="token punctuation">;</span>
+            <span class="token number">6'b000000</span><span class="token punctuation">:</span>temp_output<span class="token operator">=</span><span class="token number">9'b100100010</span><span class="token punctuation">;</span>
+            <span class="token number">6'b100011</span><span class="token punctuation">:</span>temp_output<span class="token operator">=</span><span class="token number">9'b011100000</span><span class="token punctuation">;</span>
+            <span class="token number">6'b101011</span><span class="token punctuation">:</span>temp_output<span class="token operator">=</span><span class="token number">9'bx1x010000</span><span class="token punctuation">;</span>
+            <span class="token number">6'b000100</span><span class="token punctuation">:</span>temp_output<span class="token operator">=</span><span class="token number">9'bx0x001001</span><span class="token punctuation">;</span>
+            <span class="token keyword">default</span><span class="token punctuation">:</span>temp_output<span class="token operator">=</span><span class="token number">9'b000000000</span><span class="token punctuation">;</span>
+        <span class="token keyword">endcase</span>
+<span class="token keyword">endmodule</span></code></pre>
+<h5 id="ALU控制模块的设计"><a href="#ALU控制模块的设计" class="headerlink" title="ALU控制模块的设计"></a>ALU控制模块的设计</h5><p>ALU控制模块输入主控制器产生的ALUop信号和指令功能码func，输出ALU控制信号ALUCtr。具体译码规则如下图：</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20213520.png" alt="20213520"></p>
+<p>模块verilog代码设计如下：</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token keyword">module</span> <span class="token function">ALU_Ctr</span><span class="token punctuation">(</span>
+    <span class="token keyword">input</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> ALUop<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> func<span class="token punctuation">,</span>
+    <span class="token keyword">output</span> <span class="token keyword">reg</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> ALUCtr
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token important">always @</span> <span class="token punctuation">(</span>ALUop <span class="token keyword">or</span> func<span class="token punctuation">)</span>
+    <span class="token function">casex</span><span class="token punctuation">(</span><span class="token operator">{</span>ALUop<span class="token punctuation">,</span>func<span class="token operator">}</span><span class="token punctuation">)</span>
+        <span class="token number">8'b00xxxxxx</span><span class="token punctuation">:</span> ALUCtr<span class="token operator">=</span><span class="token number">4'b0010</span><span class="token punctuation">;</span>
+        <span class="token number">8'b01xxxxxx</span><span class="token punctuation">:</span> ALUCtr<span class="token operator">=</span><span class="token number">4'b0110</span><span class="token punctuation">;</span>
+        <span class="token number">8'b10xx0000</span><span class="token punctuation">:</span> ALUCtr<span class="token operator">=</span><span class="token number">4'b0010</span><span class="token punctuation">;</span>
+        <span class="token number">8'b10xx0010</span><span class="token punctuation">:</span> ALUCtr<span class="token operator">=</span><span class="token number">4'b0110</span><span class="token punctuation">;</span>
+        <span class="token number">8'b10xx0100</span><span class="token punctuation">:</span> ALUCtr<span class="token operator">=</span><span class="token number">4'b0000</span><span class="token punctuation">;</span>
+        <span class="token number">8'b10xx0101</span><span class="token punctuation">:</span> ALUCtr<span class="token operator">=</span><span class="token number">4'b0001</span><span class="token punctuation">;</span>
+        <span class="token number">8'b10xx1010</span><span class="token punctuation">:</span> ALUCtr<span class="token operator">=</span><span class="token number">4'b0111</span><span class="token punctuation">;</span>
+        <span class="token keyword">default</span><span class="token punctuation">:</span> ALUCtr<span class="token operator">=</span><span class="token number">4'b0000</span><span class="token punctuation">;</span>
+    <span class="token keyword">endcase</span>
+<span class="token keyword">endmodule</span></code></pre>
+<h5 id="Mips微处理器顶层模块设计"><a href="#Mips微处理器顶层模块设计" class="headerlink" title="Mips微处理器顶层模块设计"></a>Mips微处理器顶层模块设计</h5><p>顶层模块将之前的多个模块实例化，并且按照图5中将各个模块通过复用器、移位、符号拓展、拼接单元连接起来。</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/20214745.png" alt="20214745"></p>
+<p>模块verilog代码设计如下（中间信号见图5）：</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token keyword">module</span> <span class="token function">main_mips_cpu</span><span class="token punctuation">(</span>
+    <span class="token keyword">input</span> Clk<span class="token punctuation">,</span>
+    <span class="token keyword">input</span> Reset
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">wire</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span>         TempPC<span class="token punctuation">,</span>MuxPC<span class="token punctuation">,</span>JumpPC<span class="token punctuation">,</span>BranchPC<span class="token punctuation">,</span>SquencePC<span class="token punctuation">,</span>Imm32<span class="token punctuation">,</span>ImmL2<span class="token punctuation">,</span>RegWD<span class="token punctuation">,</span>RsData<span class="token punctuation">,</span>RtData<span class="token punctuation">,</span>ALUIn2<span class="token punctuation">,</span>ALURes<span class="token punctuation">,</span>MemRD<span class="token punctuation">,</span>Instr<span class="token punctuation">;</span>
+    <span class="token keyword">wire</span> <span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> RegWA<span class="token punctuation">;</span>
+    <span class="token keyword">wire</span> <span class="token punctuation">[</span><span class="token number">27</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> PsudeoPC<span class="token punctuation">;</span>
+    <span class="token keyword">wire</span> BranchZ<span class="token punctuation">,</span>J<span class="token punctuation">,</span>B<span class="token punctuation">,</span>Zero<span class="token punctuation">,</span>RegDst<span class="token punctuation">,</span>RegWr<span class="token punctuation">,</span>ALUSrc<span class="token punctuation">,</span>MemWR<span class="token punctuation">,</span>Mem2Reg<span class="token punctuation">;</span>
+    <span class="token keyword">wire</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> ALUOp<span class="token punctuation">;</span>
+    <span class="token keyword">wire</span> <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> ALUCtr<span class="token punctuation">;</span>
+    <span class="token keyword">reg</span> <span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span> PC<span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> PsudeoPC<span class="token operator">={</span>Instr<span class="token punctuation">[</span><span class="token number">25</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">2'b00</span><span class="token operator">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> JumpPC<span class="token operator">={</span>SquencePC<span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">28</span><span class="token punctuation">]</span><span class="token punctuation">,</span>PsudeoPC<span class="token operator">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> SquencePC<span class="token operator">=</span>PC<span class="token operator">+</span><span class="token number">4</span><span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> BranchPC<span class="token operator">=</span>ImmL2<span class="token operator">+</span>SquencePC<span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> MuxPC<span class="token operator">=</span>BranchZ<span class="token operator">?</span>BranchPC<span class="token punctuation">:</span>SquencePC<span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> TempPC<span class="token operator">=</span>J<span class="token operator">?</span>JumpPC<span class="token punctuation">:</span>MuxPC<span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> BranchZ<span class="token operator">=</span>Zero<span class="token operator">&amp;</span>B<span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> ImmL2<span class="token operator">={</span>Imm32<span class="token punctuation">[</span><span class="token number">29</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">2'b00</span><span class="token operator">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> Imm32<span class="token operator">={</span>Instr<span class="token punctuation">[</span><span class="token number">15</span><span class="token punctuation">]</span><span class="token operator">?</span><span class="token number">16'hffff</span><span class="token punctuation">:</span><span class="token number">16'h0</span><span class="token punctuation">,</span>Instr<span class="token punctuation">[</span><span class="token number">15</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> ALUIn2<span class="token operator">=</span>ALUSrc<span class="token operator">?</span>Imm32<span class="token punctuation">:</span>RtData<span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> RegWA<span class="token operator">=</span>RegDst<span class="token operator">?</span>Instr<span class="token punctuation">[</span><span class="token number">15</span><span class="token punctuation">:</span><span class="token number">11</span><span class="token punctuation">]</span><span class="token punctuation">:</span>Instr<span class="token punctuation">[</span><span class="token number">20</span><span class="token punctuation">:</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">assign</span> RegWD<span class="token operator">=</span>Mem2Reg<span class="token operator">?</span>MemRD<span class="token punctuation">:</span>ALURes<span class="token punctuation">;</span>
+    data_rom <span class="token function">U_data_rom</span><span class="token punctuation">(</span>ALURes<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>MemRD<span class="token punctuation">,</span>RtData<span class="token punctuation">,</span>MemWR<span class="token punctuation">,</span>Clk<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ALU <span class="token function">U_ALU</span><span class="token punctuation">(</span>RsData<span class="token punctuation">,</span>ALUIn2<span class="token punctuation">,</span>ALUCtr<span class="token punctuation">,</span>ALURes<span class="token punctuation">,</span>Zero<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    instruct_rom <span class="token function">U_instruct_rom</span><span class="token punctuation">(</span>PC<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>Instr<span class="token punctuation">,</span>Clk<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    regFile            <span class="token function">U_regFile</span><span class="token punctuation">(</span>Instr<span class="token punctuation">[</span><span class="token number">25</span><span class="token punctuation">:</span><span class="token number">21</span><span class="token punctuation">]</span><span class="token punctuation">,</span>Instr<span class="token punctuation">[</span><span class="token number">20</span><span class="token punctuation">:</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">,</span>RegWA<span class="token punctuation">,</span>RegWD<span class="token punctuation">,</span>RegWr<span class="token punctuation">,</span>Clk<span class="token punctuation">,</span>Reset<span class="token punctuation">,</span>RsData<span class="token punctuation">,</span>RtData<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    master_Ctr <span class="token function">U_master_Ctr</span><span class="token punctuation">(</span>Instr<span class="token punctuation">[</span><span class="token number">31</span><span class="token punctuation">:</span><span class="token number">26</span><span class="token punctuation">]</span><span class="token punctuation">,</span>ALUOp<span class="token punctuation">,</span>RegDst<span class="token punctuation">,</span>RegWr<span class="token punctuation">,</span>ALUSrc<span class="token punctuation">,</span>MemWR<span class="token punctuation">,</span>B<span class="token punctuation">,</span>J<span class="token punctuation">,</span>Mem2Reg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ALU_Ctr <span class="token function">U_ALU_Ctr</span><span class="token punctuation">(</span>ALUOp<span class="token punctuation">,</span>Instr<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">:</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>ALUCtr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token important">always @</span> <span class="token punctuation">(</span><span class="token keyword">negedge</span> Clk<span class="token punctuation">)</span>
+    <span class="token keyword">begin</span>
+    <span class="token function">if</span><span class="token punctuation">(</span>Reset<span class="token punctuation">)</span>
+    PC<span class="token operator">&lt;=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+    PC<span class="token operator">&lt;=</span>TempPC<span class="token punctuation">;</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">endmodule</span>
+</code></pre>
+<hr>
+<h4 id="实验步骤"><a href="#实验步骤" class="headerlink" title="实验步骤"></a>实验步骤</h4><ol>
+<li><p>使用MARS获取测试程序的机器码，并以test.txt保存在D:/inter/mips_cpu路径下。</p>
+</li>
+<li><p>按照上述编写各个子模块，并且对各子模块分级调试仿真。</p>
+</li>
+<li><p>编写testbench对顶层模块实例化，进而对整个微处理器进行仿真，并且对仿真结果进行分析。</p>
+<p>testbench如下：</p>
+<pre class=" language-verilog"><code class="language-verilog"><span class="token constant">`timescale</span> <span class="token number">1</span>ns<span class="token operator">/</span><span class="token number">1</span>ns
+<span class="token keyword">module</span> <span class="token function">test_main</span><span class="token punctuation">(</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">reg</span> Clk<span class="token punctuation">,</span>Reset<span class="token punctuation">;</span>
+    main_mips_cpu <span class="token function">U0</span><span class="token punctuation">(</span>Clk<span class="token punctuation">,</span>Reset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">parameter</span> PERIOD<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">;</span>
+    <span class="token important">always </span><span class="token keyword">begin</span>
+        Clk<span class="token operator">=</span><span class="token number">1'b0</span><span class="token punctuation">;</span>
+        #<span class="token punctuation">(</span>PERIOD<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">)</span> Clk<span class="token operator">=</span><span class="token number">1'b1</span><span class="token punctuation">;</span>
+        #<span class="token punctuation">(</span>PERIOD<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">end</span>
+    <span class="token keyword">initial</span>
+    <span class="token keyword">begin</span>
+    Reset<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token number">#20</span>
+    Reset<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token number">#2000</span>
+    <span class="token property">$stop</span><span class="token punctuation">;</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">endmodule</span></code></pre>
+</li>
+</ol>
+<hr>
+<h4 id="实验结果及分析"><a href="#实验结果及分析" class="headerlink" title="实验结果及分析"></a>实验结果及分析</h4><h5 id="测试的程序"><a href="#测试的程序" class="headerlink" title="测试的程序"></a>测试的程序</h5><pre class=" language-verilog"><code class="language-verilog">main<span class="token punctuation">:</span>    add <span class="token property">$4</span><span class="token punctuation">,</span><span class="token property">$2</span><span class="token punctuation">,</span><span class="token property">$3</span>
+        lw <span class="token property">$4</span><span class="token punctuation">,</span><span class="token function">4</span><span class="token punctuation">(</span><span class="token property">$2</span><span class="token punctuation">)</span>
+        sw <span class="token property">$5</span><span class="token punctuation">,</span><span class="token function">8</span><span class="token punctuation">(</span><span class="token property">$2</span><span class="token punctuation">)</span>
+        sub <span class="token property">$2</span><span class="token punctuation">,</span><span class="token property">$4</span><span class="token punctuation">,</span><span class="token property">$3</span>
+        <span class="token keyword">or</span> <span class="token property">$2</span><span class="token punctuation">,</span><span class="token property">$4</span><span class="token punctuation">,</span><span class="token property">$3</span>
+        <span class="token keyword">and</span> <span class="token property">$2</span><span class="token punctuation">,</span><span class="token property">$4</span><span class="token punctuation">,</span><span class="token property">$3</span>
+        slt <span class="token property">$2</span><span class="token punctuation">,</span><span class="token property">$4</span><span class="token punctuation">,</span><span class="token property">$3</span>
+        beq <span class="token property">$3</span><span class="token punctuation">,</span><span class="token property">$3</span><span class="token punctuation">,</span>equ
+        w <span class="token property">$2</span><span class="token punctuation">,</span><span class="token function">0</span><span class="token punctuation">(</span><span class="token property">$3</span><span class="token punctuation">)</span>
+equ<span class="token punctuation">:</span>    beq <span class="token property">$3</span><span class="token punctuation">,</span><span class="token property">$4</span><span class="token punctuation">,</span>exit
+        sw <span class="token property">$2</span><span class="token punctuation">,</span><span class="token function">0</span><span class="token punctuation">(</span><span class="token property">$3</span><span class="token punctuation">)</span>
+exit<span class="token punctuation">:</span>   j main</code></pre>
+<h5 id="实验仿真波形图"><a href="#实验仿真波形图" class="headerlink" title="实验仿真波形图"></a>实验仿真波形图</h5><p>实验仿真结果波形图的重要信号如下图（其中存储器和寄存器数据只选择了前5组，因为只有前5个单元的存储器和寄存器数据才有变化）</p>
+<p><img src="https://gitee.com//Riser_Wu/images/raw/master/img/22234421.png" alt="图6 实验仿真波形图"></p>
+<h5 id="实验结果分析"><a href="#实验结果分析" class="headerlink" title="实验结果分析"></a>实验结果分析</h5><h6 id="测试信号"><a href="#测试信号" class="headerlink" title="测试信号"></a>测试信号</h6><ul>
+<li>时钟信号Clk是以10ns为周期的正方波</li>
+<li>复位信号Reset在20ns前为1即有效20ns后为0即无效</li>
+</ul>
+<p>符合我们测试信号的预置。</p>
+<h6 id="预置和边沿要求"><a href="#预置和边沿要求" class="headerlink" title="预置和边沿要求"></a>预置和边沿要求</h6><ul>
+<li>寄存器的初始值全为0，存储器的初始值为各自的编号</li>
+<li>指令读取在时钟上升沿完成，PC指针的修改，寄存器文件和数据存储器的写入在时钟下降沿完成。</li>
+</ul>
+<p>符合实验要求</p>
+<h6 id="测试执行的逻辑正确性"><a href="#测试执行的逻辑正确性" class="headerlink" title="测试执行的逻辑正确性"></a>测试执行的逻辑正确性</h6><ol>
+<li><p>PC的跳转情况</p>
+<p>通过指令指针PC的跳转情况，判断整个程序执行的整体跳转情况。我们发现PC的值通过一次递增4在0~32间来回循环，说明程序是在0到8号指令来回循环执行，这符合程序执行的跳转逻辑，我们结合后面的分析判断此处跳转的合理性。</p>
+</li>
+<li><p>第一个循环的执行情况</p>
+<ul>
+<li><p>复位信号失效后的第一个时钟下降沿，先看到PC的值从0跳变到4，并且在下一个时钟上升沿第2条指令的机器码读入，再看这个时钟周期内，RegDst、RegWr为1，其余控制信号为0，表明ALU执行Rs、Rt两寄存器操作数的运算，并将ALU结果写入Rd寄存器，与add指令相符，时钟下降沿时寄存器和存储器值并未发生变化，因为第一条指令是将2号寄存器和3号寄存器的值相加赋予4号寄存器，这里所有寄存器的值都为0，所有没改变4号寄存器的值。</p>
+</li>
+<li><p>时钟的第二个有效下降沿，PC的值从4变为8，并且在下一个时钟上升沿第3条指令的机器码读入，再看这个时钟周期内，ALUSrc、Mem2Reg、RegWr为1，其余控制信号为0，表明ALU执行Rs寄存器操作数和立即数的运算，并将结果作为地址得到对应存储器数据写入Rt寄存器，这与lw指令相符，并且在时钟下降沿4号寄存器变为1，我们看源指令lw $4,4($2)，将存储单元地址为4的存储单元值装载到4号寄存器，按照实验要求中数据存储器的地址规范要求，那么这里存储单元为4的就是1号存储单元，它的值为1,4号寄存器变为1，执行正确。</p>
+</li>
+<li><p>时钟的第三个有效下降沿，PC的值从8变为12，并且此时第4条指令的机器码读入，再看这个时钟周期内，ALUSrc、MemWR为1，RegDst、Mem2Reg为x，其余控制信号为0，表明ALU执行Rs寄存器操作数和立即数的运算，得到存储器地址，并将Rt寄存器的值存入对应存储单元，这与sw指令相符，并且在时钟下降沿2号存储单元的值变为0，执行正确。</p>
+</li>
+<li><p>接下来4个时钟周期，RegDst、RegWr为1，其余控制信号为0，表明ALU执行Rs寄存器操作数和Rt数的运算，并将得到的结果写入Rd寄存器，这是由于这4条指令执行的都是算术逻辑运算类指令，并将值赋予2号寄存器，容易发现2号寄存器值的改变也是正确的。</p>
+</li>
+<li><p>时钟的第8个有效下降沿，PC的值从28变为32，说明第7条指令执行完毕，并且在下一个时钟上升沿第8条指令的机器码读入，这个时间周期内，B为1，RegDst、Mem2Reg为x，其余控制信号为0，PC的跳转由ALU单元的zero信号决定，这与beq指令译码相符，容易知道3号寄存器和4号寄存器的值不相等，那么程序往下执行，所以执行正确。</p>
+</li>
+<li><p>时钟的第9个有效下降沿，PC的值从32变为0，说明第8条指令执行完毕，并且下一时钟上升沿第0条指令的机器码读入，这个时间周期内，BranchZ为1，RegDst、Mem2Reg、ALUSrc为x，其余控制信号为0，这与j指令译码相符，到8号指令调回0号指令，对应波形中PC从32跳回0，所以执行正确。</p>
+<p>综上，这个微处理器的仿真结果是正确的。</p>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="实验总结"><a href="#实验总结" class="headerlink" title="实验总结"></a>实验总结</h4><p>这次简单指令集MIPS微处理器设计仿真实验对微处理器的模块结构及功能有了更清晰的认识，对哈佛结构计算机的工作原理也有了更加深刻的理解，达到了巩固课内学习的效果，并且掌握了Verilog仿真平台的使用方法。</p>
+<p>在这次实验中，感谢老师为我们提供了丰富的实验资源，实验过程中目的性非常明确，尽管还是难免遇到了不少问题，通过联系课内知识冷静思考，并且利用老师开设的讨论平台积极与同学们讨论，将这些问题逐一解决，这个过程也极大地锻炼了我。</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Riser6.github.io" rel="external nofollow noreferrer">Riser</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://Riser6.github.io/2020/04/23/jian-dan-zhi-ling-ji-mips-wei-chu-li-qi-she-ji-fang-zhen-shi-yan-bao-gao/">http://Riser6.github.io/2020/04/23/jian-dan-zhi-ling-ji-mips-wei-chu-li-qi-she-ji-fang-zhen-shi-yan-bao-gao/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="http://Riser6.github.io" target="_blank">Riser</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/mips%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8/">
+                                    <span class="chip bg-color">mips微处理器</span>
+                                </a>
+                            
+                                <a href="/tags/Verilog/">
+                                    <span class="chip bg-color">Verilog</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+        <style>
+    .valine-card {
+        margin: 1.5rem auto;
+    }
+
+    .valine-card .card-content {
+        padding: 20px 20px 5px 20px;
+    }
+
+    #vcomments textarea {
+        box-sizing: border-box;
+        background: url("/medias/comment_bg.png") 100% 100% no-repeat;
+    }
+
+    #vcomments p {
+        margin: 2px 2px 10px;
+        font-size: 1.05rem;
+        line-height: 1.78rem;
+    }
+
+    #vcomments blockquote p {
+        text-indent: 0.2rem;
+    }
+
+    #vcomments a {
+        padding: 0 2px;
+        color: #4cbf30;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    #vcomments img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+    }
+
+    #vcomments ol li {
+        list-style-type: decimal;
+    }
+
+    #vcomments ol,
+    ul {
+        display: block;
+        padding-left: 2em;
+        word-spacing: 0.05rem;
+    }
+
+    #vcomments ul li,
+    ol li {
+        display: list-item;
+        line-height: 1.8rem;
+        font-size: 1rem;
+    }
+
+    #vcomments ul li {
+        list-style-type: disc;
+    }
+
+    #vcomments ul ul li {
+        list-style-type: circle;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    #vcomments table, th, td {
+        border: 0;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments h1 {
+        font-size: 1.85rem;
+        font-weight: bold;
+        line-height: 2.2rem;
+    }
+
+    #vcomments h2 {
+        font-size: 1.65rem;
+        font-weight: bold;
+        line-height: 1.9rem;
+    }
+
+    #vcomments h3 {
+        font-size: 1.45rem;
+        font-weight: bold;
+        line-height: 1.7rem;
+    }
+
+    #vcomments h4 {
+        font-size: 1.25rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    #vcomments h5 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        line-height: 1.4rem;
+    }
+
+    #vcomments h6 {
+        font-size: 1rem;
+        line-height: 1.3rem;
+    }
+
+    #vcomments p {
+        font-size: 1rem;
+        line-height: 1.5rem;
+    }
+
+    #vcomments hr {
+        margin: 12px 0;
+        border: 0;
+        border-top: 1px solid #ccc;
+    }
+
+    #vcomments blockquote {
+        margin: 15px 0;
+        border-left: 5px solid #42b983;
+        padding: 1rem 0.8rem 0.3rem 0.8rem;
+        color: #666;
+        background-color: rgba(66, 185, 131, .1);
+    }
+
+    #vcomments pre {
+        font-family: monospace, monospace;
+        padding: 1.2em;
+        margin: .5em 0;
+        background: #272822;
+        overflow: auto;
+        border-radius: 0.3em;
+        tab-size: 4;
+    }
+
+    #vcomments code {
+        font-family: monospace, monospace;
+        padding: 1px 3px;
+        font-size: 0.92rem;
+        color: #e96900;
+        background-color: #f8f8f8;
+        border-radius: 2px;
+    }
+
+    #vcomments pre code {
+        font-family: monospace, monospace;
+        padding: 0;
+        color: #e8eaf6;
+        background-color: #272822;
+    }
+
+    #vcomments pre[class*="language-"] {
+        padding: 1.2em;
+        margin: .5em 0;
+    }
+
+    #vcomments code[class*="language-"],
+    pre[class*="language-"] {
+        color: #e8eaf6;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+
+    #vcomments b,
+    strong {
+        font-weight: bold;
+    }
+
+    #vcomments dfn {
+        font-style: italic;
+    }
+
+    #vcomments small {
+        font-size: 85%;
+    }
+
+    #vcomments cite {
+        font-style: normal;
+    }
+
+    #vcomments mark {
+        background-color: #fcf8e3;
+        padding: .2em;
+    }
+
+    #vcomments table, th, td {
+        padding: 12px 13px;
+        border: 1px solid #dfe2e5;
+    }
+
+    table tr:nth-child(2n), thead {
+        background-color: #fafafa;
+    }
+
+    #vcomments table th {
+        background-color: #f2f2f2;
+        min-width: 80px;
+    }
+
+    #vcomments table td {
+        min-width: 80px;
+    }
+
+    #vcomments [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+        position: inherit;
+        margin-left: -1.3rem;
+        margin-right: 0.4rem;
+        margin-top: -1px;
+        vertical-align: middle;
+        left: unset;
+        visibility: visible;
+    }
+</style>
+
+<div class="card valine-card" data-aos="fade-up">
+    <div class="comment_headling" style="font-size: 20px; font-weight: 700; position: relative; left: 20px; top: 15px; padding-bottom: 5px;">
+        <i class="fas fa-comments fa-fw" aria-hidden="true"></i>
+        <span>评论</span>
+    </div>
+    <div id="vcomments" class="card-content" style="display: grid">
+    </div>
+</div>
+
+<script src="/libs/valine/av-min.js"></script>
+<script src="/libs/valine/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#vcomments',
+        appId: 'TbkIgxj7apkJ4AWFpvgQIpO4-gzGzoHsz',
+        appKey: 'hW82qJK0380DkiSYGCHBhkQI',
+        notify: 'false' === 'true',
+        verify: 'false' === 'true',
+        visitor: 'true' === 'true',
+        avatar: 'mm',
+        pageSize: '10',
+        lang: 'zh-cn',
+        placeholder: 'just go go'
+    });
+</script>
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/05/03/cong-shufflenet-lun-wen-ru-shou-pan-dian-qing-liang-ji-wang-luo-yuan-chuang/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="从ShuffleNet论文入手盘点轻量级网络（原创）">
+                        
+                        <span class="card-title">从ShuffleNet论文入手盘点轻量级网络（原创）</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            本文从移动端应用广泛地ShuffleNet网络入手，盘点经典轻量级网络。
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-05-03
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Deeplearning/" class="post-category">
+                                    Deeplearning
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%BD%91%E7%BB%9C/">
+                        <span class="chip bg-color">轻量级网络</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/04/19/qian-deng-qi-ran-qu-hui-an-hua-xia-qi-xin-shou-xing-he/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="千灯齐燃驱晦暗，华夏齐心守星河">
+                        
+                        <span class="card-title">千灯齐燃驱晦暗，华夏齐心守星河</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            疫情感闻
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9A%8F%E7%AC%94/" class="post-category">
+                                    随笔
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%8A%97%E7%96%AB/">
+                        <span class="chip bg-color">抗疫</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+    
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align" style="margin-bottom: 15px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="http://Riser6.github.io" target="_blank">吴栋</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
+                class="white-color">34.8k</span>&nbsp;字
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <span id="sitetime">载入运行时间...</span>
+            <script>
+                function siteTime() {
+                    var seconds = 1000;
+                    var minutes = seconds * 60;
+                    var hours = minutes * 60;
+                    var days = hours * 24;
+                    var years = days * 365;
+                    var today = new Date();
+                    var startYear = "2020";
+                    var startMonth = "4";
+                    var startDate = "08";
+                    var startHour = "0";
+                    var startMinute = "0";
+                    var startSecond = "0";
+                    var todayYear = today.getFullYear();
+                    var todayMonth = today.getMonth() + 1;
+                    var todayDate = today.getDate();
+                    var todayHour = today.getHours();
+                    var todayMinute = today.getMinutes();
+                    var todaySecond = today.getSeconds();
+                    var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                    var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                    var diff = t2 - t1;
+                    var diffYears = Math.floor(diff / years);
+                    var diffDays = Math.floor((diff / days) - diffYears * 365);
+                    var diffHours = Math.floor((diff - (diffYears * 365 + diffDays) * days) / hours);
+                    var diffMinutes = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+                        minutes);
+                    var diffSeconds = Math.floor((diff - (diffYears * 365 + diffDays) * days - diffHours * hours -
+                        diffMinutes * minutes) / seconds);
+                    if (startYear == todayYear) {
+                        document.getElementById("year").innerHTML = todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffDays + " 天 " + diffHours +
+                            " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    } else {
+                        document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                        document.getElementById("sitetime").innerHTML = "本站已安全运行 " + diffYears + " 年 " + diffDays +
+                            " 天 " + diffHours + " 小时 " + diffMinutes + " 分钟 " + diffSeconds + " 秒";
+                    }
+                }
+                setInterval(siteTime, 1000);
+            </script>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Riser6" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1528152501@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1528152501" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1528152501" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
